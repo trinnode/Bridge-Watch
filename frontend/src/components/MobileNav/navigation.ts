@@ -20,6 +20,7 @@ export const navGroups: NavGroup[] = [
       { to: "/transactions", label: "Transactions", description: "Recent bridge transfer activity" },
       { to: "/reconciliation", label: "Reconciliation", description: "Supply drift and reserve backing triage" },
       { to: "/analytics", label: "Analytics", description: "Trend analysis and health scoring" },
+      { to: "/data-provenance", label: "Provenance", description: "Trace metric lineage from source to destination" },
       { to: "/watchlist", label: "Watchlist", description: "Tracked assets and alerts" },
       { to: "/reports", label: "Reports", description: "Operational reporting views" },
     ],
