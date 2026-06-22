@@ -764,6 +764,74 @@ pub struct SignerSignature {
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
+pub enum StatusTier {
+    Ok,
+    Low,
+    Medium,
+    High,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct ContractStatusRollup {
+    pub tier: StatusTier,
+    pub asset_ok: u32,
+    pub asset_low: u32,
+    pub asset_medium: u32,
+    pub asset_high: u32,
+    pub bridge_ok: u32,
+    pub bridge_low: u32,
+    pub bridge_medium: u32,
+    pub bridge_high: u32,
+    pub timestamp: u64,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct AssetStatusRollup {
+    pub asset_code: String,
+    pub tier: StatusTier,
+    pub health_score: u32,
+    pub has_price_deviation_alert: bool,
+    pub price_deviation_tier: StatusTier,
+    pub paused: bool,
+    pub active: bool,
+    pub timestamp: u64,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct BridgeStatusRollup {
+    pub bridge_id: String,
+    pub tier: StatusTier,
+    pub latest_mismatch_bps: i128,
+    pub is_critical: bool,
+    pub timestamp: u64,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct AssetLockState {
+    pub asset_code: String,
+    pub is_locked: bool,
+    pub reason: String,
+    pub locked_by: Address,
+    pub locked_at: u64,
+    pub unlocked_by: Option<Address>,
+    pub unlocked_at: Option<u64>,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct AssetLockRecord {
+    pub locked: bool,
+    pub reason: String,
+    pub caller: Address,
+    pub timestamp: u64,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AssetDataKey {
     Health(String),
     Price(String),
@@ -779,6 +847,8 @@ pub enum AssetDataKey {
     LiqHist(String),
     ArchLiqHist(String),
     PauseReason(String),
+    Lock(String),
+    LockHist(String),
 }
 
 #[contracttype]
@@ -838,6 +908,9 @@ pub enum DataKey {
     CurrentWasmHash,
     RollbackTargetHash,
     ConfigKeys,
+    ContractStatusRollup,
+    AssetStatusRollup(String),
+    BridgeStatusRollup(String),
 }
 
 #[contracttype]
